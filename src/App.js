@@ -1,24 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import Form from "./components/FormTodo";
+import Counter from "./components/Counter";
+import Message from "./components/Message";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+`;
+const H1 = styled.h1`
+  font-size: 24px;
+  font-weight: 700;
+`;
+
+const Link = ({ className, red, text, ...props }) => (
+  <a {...props} className={className}>
+    {text}
+  </a>
+);
+
+const StyledComp = styled(Link)`
+  color: ${(props) => (props.red ? "red" : "blue")};
+  text-decoration: none;
+`;
 
 function App() {
+  const [message, setMessage] = React.useState("Hello World!");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Wrapper>
+        <H1>Styled components...</H1>
+        <StyledComp
+          text="Styled component"
+          href="https://www.styled-components.com/"
+          green
+          className="ranjeet"
+        />
+      </Wrapper>
+      <div className="App">
+        <Counter />
+        <Form />
+        <input type="text" onChange={(e) => setMessage(e.target.value)} />
+        <Message message={message} />
+      </div>
+    </>
   );
 }
 
