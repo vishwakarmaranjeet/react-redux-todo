@@ -10,7 +10,7 @@ export const incrementCounter = () => {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(increment());
-    }, 2000);
+    }, 500);
   };
 };
 
@@ -24,7 +24,7 @@ export const decrementCounter = () => {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(decrement());
-    }, 2000);
+    }, 500);
   };
 };
 
@@ -38,7 +38,7 @@ export const onStoreResult = () => {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(saveResult());
-    }, 1000);
+    }, 500);
   };
 };
 
