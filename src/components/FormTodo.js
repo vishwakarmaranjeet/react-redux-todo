@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import * as taskAction from "../actions/todoAction";
+import * as actionCreators from "../actions/todoAction";
 const FormTodo = (props) => {
   const [name, setName] = useState("");
   // Input change handler
@@ -91,9 +91,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    createTodo: (todo) => dispatch(taskAction.createTodo(todo)),
-    deleteTodo: (index) => dispatch(taskAction.deleteTodo(index)),
-    completedTodo: (index) => dispatch(taskAction.completeTodo(index)),
+    createTodo: (todo) => dispatch(actionCreators.createTodo(todo)),
+    deleteTodo: (index) => dispatch(actionCreators.deleteTodo(index)),
+    completedTodo: (index) => dispatch(actionCreators.completeTodo(index)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(FormTodo);

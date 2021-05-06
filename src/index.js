@@ -8,6 +8,7 @@ import configureStore from "./store/configureStore";
 import reportWebVitals from "./reportWebVitals";
 
 const store = configureStore();
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

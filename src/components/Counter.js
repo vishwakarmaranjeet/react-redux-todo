@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import * as taskAction from "../actions/counterAction";
+import * as actionCreators from "../actions/counterAction";
 const Counter = (props) => {
   return (
     <>
@@ -29,10 +29,10 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    incrementCounter: () => dispatch(taskAction.incrementCounter()),
-    decrementCounter: () => dispatch(taskAction.decrementCounter()),
-    onStoreResult: () => dispatch(taskAction.onStoreResult()),
-    onDeleteResult: (id) => dispatch(taskAction.onDeleteResult(id)),
+    incrementCounter: () => dispatch(actionCreators.incrementCounter()),
+    decrementCounter: () => dispatch(actionCreators.decrementCounter()),
+    onStoreResult: () => dispatch(actionCreators.onStoreResult()),
+    onDeleteResult: (id) => dispatch(actionCreators.onDeleteResult(id)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
