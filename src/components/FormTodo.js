@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import * as actionCreators from "../actions/todoAction";
+import * as actionCreators from "../actions/index";
 const FormTodo = (props) => {
   const [name, setName] = useState("");
   // Input change handler
