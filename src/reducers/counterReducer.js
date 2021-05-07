@@ -5,6 +5,14 @@ let initialState = {
   counter: 0,
   result: [],
 };
+
+const deleteResult = (state, action) => {
+  const updatedResult = state.result.filter(
+    (result) => result.id !== action.id
+  );
+  return updateObject(state, { result: updatedResult });
+};
+
 const counterReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.INCREMENT_COUNTER:
@@ -28,16 +36,14 @@ const counterReducer = (state = initialState, action) => {
     //   result: state.result.concat({ id: new Date(), value: state.counter }),
     // };
     case actionTypes.DELETE_RESULT:
-      const updatedResult = state.result.filter(
-        (result) => result.id !== action.id
-      );
       // return {
       //   ...state,
       //   result: updatedResult,
       // };
-      return updateObject(state, { result: updatedResult });
+      return deleteResult(state, action);
     default:
       return state;
   }
 };
+
 export default counterReducer;

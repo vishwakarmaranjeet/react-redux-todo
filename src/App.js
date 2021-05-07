@@ -1,7 +1,7 @@
 import * as React from "react";
-import Form from "./components/FormTodo";
-import Counter from "./components/Counter";
-import Message from "./components/Message";
+import Form from "./containers/FormTodo";
+import Counter from "./containers/Counter";
+import Message from "./containers/Message";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
