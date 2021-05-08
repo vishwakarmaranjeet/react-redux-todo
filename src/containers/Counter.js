@@ -3,7 +3,6 @@ import * as actionCreators from "../actions/index";
 const Counter = (props) => {
   return (
     <>
-      {console.log(props.counter.storedResult)}
       {props.counter}
       <button onClick={props.incrementCounter}>+</button>
       <button onClick={props.decrementCounter}>-</button>

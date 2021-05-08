@@ -1,9 +1,9 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = [
-  { name: "JavaScript", completed: true },
   { name: "HTML", completed: true },
   { name: "CSS", completed: true },
+  { name: "JavaScript", completed: true },
   { name: "Redux", completed: false },
 ];
 

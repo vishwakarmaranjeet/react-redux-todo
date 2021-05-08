@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+//import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import * as actionCreators from "../actions/index";
-const FormTodo = (props) => {
+const FormTodo = () => {
+  const todo = useSelector((state) => state.todo);
+  const dispatch = useDispatch();
+
   const [name, setName] = useState("");
   // Input change handler
   const onInputChangeHandler = (e) => {
@@ -18,7 +23,8 @@ const FormTodo = (props) => {
     if (name == null || name === "") {
       alert("Name should not be emplty");
     } else {
-      props.createTodo(todoItem);
+      dispatch(actionCreators.createTodo(todoItem));
+      //props.createTodo(todoItem);
     }
   };
   const formSubmitHandler = (e) => {
@@ -28,13 +34,13 @@ const FormTodo = (props) => {
   // Delete toto
   const deleteTodo = (e, index) => {
     e.preventDefault();
-    props.deleteTodo(index);
-    console.log("delete todo");
+    //props.deleteTodo(index);
+    dispatch(actionCreators.deleteTodo(index));
   };
   const completedTodo = (e, index) => {
     e.preventDefault();
-    props.completedTodo(index);
-    console.log("complete todo");
+    //props.completedTodo(index);
+    dispatch(actionCreators.completeTodo(index));
   };
 
   const listView = (data, index) => {
@@ -68,10 +74,9 @@ const FormTodo = (props) => {
       </div>
     );
   };
-  const taskRemaining = props.todo.filter((todo) => !todo.completed).length;
+  const taskRemaining = todo.filter((todo) => !todo.completed).length;
   return (
     <div>
-      {JSON.stringify(props.todo)}
       <h1>Example of Hooks</h1>
       {taskRemaining}
       {/* Form  */}
@@ -79,21 +84,23 @@ const FormTodo = (props) => {
         <input type="text" value={name} onChange={onInputChangeHandler}></input>
         <button type="submit">Add</button>
       </form>
-      {props.todo.map((todo, i) => listView(todo, i))}
+      {todo.map((todo, i) => listView(todo, i))}
       {/* Form */}
     </div>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    todo: state.todo,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createTodo: (todo) => dispatch(actionCreators.createTodo(todo)),
-    deleteTodo: (index) => dispatch(actionCreators.deleteTodo(index)),
-    completedTodo: (index) => dispatch(actionCreators.completeTodo(index)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(FormTodo);
+// Old code without useSelector/useDispatch function
+// const mapStateToProps = (state) => {
+//   return {
+//     todo: state.todo,
+//   };
+// };
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     createTodo: (todo) => dispatch(actionCreators.createTodo(todo)),
+//     deleteTodo: (index) => dispatch(actionCreators.deleteTodo(index)),
+//     completedTodo: (index) => dispatch(actionCreators.completeTodo(index)),
+//   };
+// };
+// export default connect(mapStateToProps, mapDispatchToProps)(FormTodo);
+export default FormTodo;
