@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 //import { connect } from "react-redux";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as actionCreators from "../actions/index";
 const FormTodo = () => {
   const todo = useSelector((state) => state.todo);

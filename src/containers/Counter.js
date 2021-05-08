@@ -1,17 +1,30 @@
-import { connect } from "react-redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import * as actionCreators from "../actions/index";
+
 const Counter = (props) => {
+  const counter = useSelector((state) => state.counter.counter);
+  const storedResult = useSelector((state) => state.counter.result);
+  const dispatch = useDispatch();
   return (
     <>
-      {props.counter}
-      <button onClick={props.incrementCounter}>+</button>
-      <button onClick={props.decrementCounter}>-</button>
-      <button onClick={props.onStoreResult}>Store Result</button>
+      {counter}
+      <button onClick={() => dispatch(actionCreators.incrementCounter())}>
+        +
+      </button>
+      <button onClick={() => dispatch(actionCreators.decrementCounter())}>
+        -
+      </button>
+      <button onClick={() => dispatch(actionCreators.onStoreResult())}>
+        Store Result
+      </button>
       <ul>
-        {props.storedResult.map((strResult) => (
+        {storedResult.map((strResult) => (
           <li
             key={strResult.id}
-            onClick={() => props.onDeleteResult(strResult.id)}
+            onClick={() =>
+              dispatch(actionCreators.onDeleteResult(strResult.id))
+            }
           >
             {strResult.value}
           </li>
@@ -20,18 +33,18 @@ const Counter = (props) => {
     </>
   );
 };
-const mapStateToProps = (state) => {
-  return {
-    counter: state.counter.counter,
-    storedResult: state.counter.result,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    incrementCounter: () => dispatch(actionCreators.incrementCounter()),
-    decrementCounter: () => dispatch(actionCreators.decrementCounter()),
-    onStoreResult: () => dispatch(actionCreators.onStoreResult()),
-    onDeleteResult: (id) => dispatch(actionCreators.onDeleteResult(id)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+// const mapStateToProps = (state) => {
+//   return {
+//     counter: state.counter.counter,
+//     storedResult: state.counter.result,
+//   };
+// };
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     incrementCounter: () => dispatch(actionCreators.incrementCounter()),
+//     decrementCounter: () => dispatch(actionCreators.decrementCounter()),
+//     onDeleteResult: (id) => dispatch(actionCreators.onDeleteResult(id)),
+//     onStoreResult: () => dispatch(actionCreators.onStoreResult()),
+//   };
+// };
+export default Counter;

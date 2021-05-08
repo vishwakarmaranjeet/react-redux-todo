@@ -10,7 +10,7 @@ export const incrementCounter = () => {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(increment());
-    }, 500);
+    }, 100);
   };
 };
 
@@ -24,7 +24,7 @@ export const decrementCounter = () => {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(decrement());
-    }, 500);
+    }, 100);
   };
 };
 
@@ -38,7 +38,7 @@ export const onStoreResult = () => {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(saveResult());
-    }, 500);
+    }, 100);
   };
 };
 
@@ -52,6 +52,6 @@ export const onDeleteResult = (id) => {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(deleteResult(id));
-    }, 500);
+    }, 100);
   };
 };
