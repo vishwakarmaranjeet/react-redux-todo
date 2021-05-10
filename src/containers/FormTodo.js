@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 //import { connect } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import * as actionCreators from "../actions/index";
 const FormTodo = () => {
   const todo = useSelector((state) => state.todo);
   const dispatch = useDispatch();
-
   const [name, setName] = useState("");
   // Input change handler
   const onInputChangeHandler = (e) => {
@@ -15,6 +15,7 @@ const FormTodo = () => {
   // Create new todo
   const createTodo = () => {
     let todoItem = {
+      id: uuidv4(),
       name,
       completed: false,
     };
@@ -31,10 +32,10 @@ const FormTodo = () => {
     createTodo();
   };
   // Delete toto
-  const deleteTodo = (e, index) => {
+  const deleteTodo = (e, id) => {
     e.preventDefault();
     //props.deleteTodo(index);
-    dispatch(actionCreators.deleteTodo(index));
+    dispatch(actionCreators.deleteTodo(id));
   };
   const completedTodo = (e, index) => {
     e.preventDefault();
@@ -58,7 +59,7 @@ const FormTodo = () => {
         </div>
         <div className="col-md-2">
           <button
-            onClick={(e) => deleteTodo(e, index)}
+            onClick={(e) => deleteTodo(e, data.id)}
             className="btn btn-danger"
           >
             Remove
@@ -76,7 +77,6 @@ const FormTodo = () => {
   const taskRemaining = todo.filter((todo) => !todo.completed).length;
   return (
     <div>
-      <h1>Example of Hooks</h1>
       {taskRemaining}
       {/* Form  */}
       <form onSubmit={formSubmitHandler}>

@@ -1,17 +1,17 @@
 import * as React from "react";
-import Form from "./containers/FormTodo";
+import FormTodo from "./containers/FormTodo";
 import Counter from "./containers/Counter";
-import Message from "./containers/Message";
-
+import ShowHide from "./containers/ShowHide";
+import { useSelector } from "react-redux";
 function App() {
-  const [message, setMessage] = React.useState("Hello World!");
+  const showHideStatus = useSelector((state) => state.show.show);
   return (
     <>
       <div className="App">
         <Counter />
-        <Form />
-        <input type="text" onChange={(e) => setMessage(e.target.value)} />
-        <Message message={message} />
+        {showHideStatus && <FormTodo />}
+        <hr />
+        <ShowHide showHideStatus={showHideStatus} />
       </div>
     </>
   );
