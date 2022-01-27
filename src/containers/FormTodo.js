@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 //import { connect } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
-import { useDispatch, useSelector } from "react-redux";
-import * as actionCreators from "../actions/index";
+import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actionCreators from '../actions/index';
+import styles from './FormTodo.module.scss';
+
 const FormTodo = () => {
   const todo = useSelector((state) => state.todo);
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   // Input change handler
   const onInputChangeHandler = (e) => {
     const { value } = e.target;
@@ -19,9 +21,10 @@ const FormTodo = () => {
       name,
       completed: false,
     };
-    setName("");
-    if (name == null || name === "") {
-      alert("Name should not be emplty");
+    setName('');
+    if (name == null || name === '') {
+      //alert('Name should not be emplty');
+      return false;
     } else {
       dispatch(actionCreators.createTodo(todoItem));
       //props.createTodo(todoItem);
@@ -45,61 +48,60 @@ const FormTodo = () => {
 
   const listView = (data, index) => {
     return (
-      <div className="row" key={index + 1}>
-        <div className="col-md-10">
+      <div className={styles.todo_list} key={index + 1}>
+        <ul>
           <li
             key={index}
-            className="list-group-item clearfix"
+            className={styles.show}
             style={{
-              textDecoration: data.completed ? "line-through" : "",
+              textDecoration: data.completed ? 'line-through' : '',
             }}
           >
             {data.name}
+            <div>
+              <button
+                onClick={(e) => completedTodo(e, index)}
+                className={!data.completed ? styles.pending : styles.completed}
+              >
+                {!data.completed ? 'Pending' : 'Completed'}
+              </button>
+              <button
+                onClick={(e) => deleteTodo(e, data.id)}
+                className={styles.btn_danger}
+              >
+                X
+              </button>
+            </div>
           </li>
-        </div>
-        <div className="col-md-2">
-          <button
-            onClick={(e) => deleteTodo(e, data.id)}
-            className="btn btn-danger"
-          >
-            Remove
-          </button>
-          <button
-            onClick={(e) => completedTodo(e, index)}
-            className="btn btn-danger"
-          >
-            {!data.completed ? "Pending" : "completed"}
-          </button>
-        </div>
+        </ul>
       </div>
     );
   };
   const taskRemaining = todo.filter((todo) => !todo.completed).length;
   return (
     <div>
-      {taskRemaining}
+      <p className={styles.tasks_count}>
+        You have<span className={styles.counter}>{taskRemaining} </span>
+        pending tasks
+      </p>
       {/* Form  */}
-      <form onSubmit={formSubmitHandler}>
-        <input type="text" value={name} onChange={onInputChangeHandler}></input>
-        <button type="submit">Add</button>
+      <form onSubmit={formSubmitHandler} className={styles.flex_row}>
+        <input
+          type="text"
+          value={name}
+          onChange={onInputChangeHandler}
+          className={styles.input_box}
+          autoFocus
+        ></input>
+        <div>
+          <button type="submit" className={styles.add_button}>
+            +
+          </button>
+        </div>
       </form>
       {todo.map((todo, i) => listView(todo, i))}
       {/* Form */}
     </div>
   );
 };
-// Old code without useSelector/useDispatch function
-// const mapStateToProps = (state) => {
-//   return {
-//     todo: state.todo,
-//   };
-// };
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     createTodo: (todo) => dispatch(actionCreators.createTodo(todo)),
-//     deleteTodo: (index) => dispatch(actionCreators.deleteTodo(index)),
-//     completedTodo: (index) => dispatch(actionCreators.completeTodo(index)),
-//   };
-// };
-// export default connect(mapStateToProps, mapDispatchToProps)(FormTodo);
 export default FormTodo;

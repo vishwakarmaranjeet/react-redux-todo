@@ -1,17 +1,18 @@
-import * as React from "react";
-import FormTodo from "./containers/FormTodo";
-import Counter from "./containers/Counter";
-import ShowHide from "./containers/ShowHide";
-import { useSelector } from "react-redux";
+import * as React from 'react';
+import FormTodo from './containers/FormTodo';
+import styles from './App.module.scss';
+import sign from './undraw.svg';
+//import { useSelector } from 'react-redux';
 function App() {
-  const showHideStatus = useSelector((state) => state.show.show);
+  // const showHideStatus = useSelector((state) => state.show.show);
   return (
     <>
-      <div className="App">
-        <Counter />
-        {showHideStatus && <FormTodo />}
-        <hr />
-        <ShowHide showHideStatus={showHideStatus} />
+      <div className={styles.inner_container}>
+        <div className={styles.container}>
+          <div className={styles.right_content}>
+            <FormTodo />
+          </div>
+        </div>
       </div>
     </>
   );
