@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-//import { connect } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import * as actionCreators from '../actions/index';
-import styles from './FormTodo.module.scss';
+import * as actionCreators from '../../actions';
+import styles from './TodoForm.module.scss';
+import deleteIcon from '../../delete.svg';
 
-const FormTodo = () => {
+const Index = () => {
   const todo = useSelector((state) => state.todo);
   const dispatch = useDispatch();
   const [name, setName] = useState('');
-  // Input change handler
+
   const onInputChangeHandler = (e) => {
     const { value } = e.target;
     setName(value);
   };
-  // Create new todo
+
   const createTodo = () => {
     let todoItem = {
       id: uuidv4(),
@@ -23,74 +23,70 @@ const FormTodo = () => {
     };
     setName('');
     if (name == null || name === '') {
-      //alert('Name should not be emplty');
       return false;
     } else {
       dispatch(actionCreators.createTodo(todoItem));
-      //props.createTodo(todoItem);
     }
   };
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
     createTodo();
   };
-  // Delete toto
+
   const deleteTodo = (e, id) => {
     e.preventDefault();
-    //props.deleteTodo(index);
     dispatch(actionCreators.deleteTodo(id));
   };
+
   const completedTodo = (e, index) => {
     e.preventDefault();
-    //props.completedTodo(index);
     dispatch(actionCreators.completeTodo(index));
   };
 
   const listView = (data, index) => {
     return (
-      <div className={styles.todo_list} key={index + 1}>
-        <ul>
-          <li
-            key={index}
-            className={styles.show}
-            style={{
-              textDecoration: data.completed ? 'line-through' : '',
-            }}
+      <li key={index} className={styles.show}>
+        <span
+          className={styles.text}
+          style={{
+            textDecoration: data.completed ? 'line-through' : '',
+          }}
+        >
+          {data.name}
+        </span>
+        <div className={styles.btn_action}>
+          <button
+            onClick={(e) => completedTodo(e, index)}
+            className={!data.completed ? styles.pending : styles.completed}
           >
-            {data.name}
-            <div>
-              <button
-                onClick={(e) => completedTodo(e, index)}
-                className={!data.completed ? styles.pending : styles.completed}
-              >
-                {!data.completed ? 'Pending' : 'Completed'}
-              </button>
-              <button
-                onClick={(e) => deleteTodo(e, data.id)}
-                className={styles.btn_danger}
-              >
-                X
-              </button>
-            </div>
-          </li>
-        </ul>
-      </div>
+            {!data.completed ? 'Pending' : 'Completed'}
+          </button>
+          <div
+            onClick={(e) => deleteTodo(e, data.id)}
+            className={styles.btn_danger}
+          >
+            <img src={deleteIcon} width={15} height={15} alt="delete" />
+          </div>
+        </div>
+      </li>
     );
   };
+
   const taskRemaining = todo.filter((todo) => !todo.completed).length;
   return (
-    <div>
+    <>
       <p className={styles.tasks_count}>
         You have<span className={styles.counter}>{taskRemaining} </span>
         pending tasks
       </p>
       {/* Form  */}
-      <form onSubmit={formSubmitHandler} className={styles.flex_row}>
+      <form onSubmit={formSubmitHandler} className={styles.flex}>
         <input
           type="text"
           value={name}
           onChange={onInputChangeHandler}
-          className={styles.input_box}
+          className={styles.textbox}
           autoFocus
         ></input>
         <div>
@@ -99,9 +95,10 @@ const FormTodo = () => {
           </button>
         </div>
       </form>
-      {todo.map((todo, i) => listView(todo, i))}
-      {/* Form */}
-    </div>
+      <div className={styles.todo_list}>
+        <ul>{todo.map((todo, i) => listView(todo, i))}</ul>
+      </div>
+    </>
   );
 };
-export default FormTodo;
+export default Index;

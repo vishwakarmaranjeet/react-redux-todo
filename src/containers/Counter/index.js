@@ -1,8 +1,8 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import * as actionCreators from "../actions/index";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as actionCreators from '../../actions/index';
 
-const Counter = (props) => {
+const Index = () => {
   const counter = useSelector((state) => state.counter.counter);
   const storedResult = useSelector((state) => state.counter.result);
   const dispatch = useDispatch();
@@ -47,4 +47,4 @@ const Counter = (props) => {
 //     onStoreResult: () => dispatch(actionCreators.onStoreResult()),
 //   };
 // };
-export default Counter;
+export default Index;
